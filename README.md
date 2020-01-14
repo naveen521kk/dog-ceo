@@ -4,6 +4,7 @@ This is a python app made with pygame and is a example of dog.ceo a simple image
 
 ## Installation
 
+Required python3.x. Tested with python 3.7 and 3.8. Download python [here])(https://python.org)
 Clone the repository using Git. See the statement below for help.
 
 ```bash
@@ -29,10 +30,12 @@ Please make sure to update tests as appropriate.
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
 
-##This can be reached at:
-###Git urls:
+## This can be reached at:
+### Git urls:
 [github.com](https://github.com/naveen521kk/dog-ceo-py)
 [gitlab.com](https://gitlab.com/naveen521kk/dog-ceo)
 
-###Email: [naveen@syrusdark.website](mailto:naveen@syrusdark.website)
-###Website: [Syrusdark Blog](https://blog.syrusdark.webiste)
+### Email: 
+[naveen@syrusdark.website](mailto:naveen@syrusdark.website)
+### Website: 
+[Syrusdark Blog](https://blog.syrusdark.webiste)
