@@ -39,4 +39,4 @@ Please make sure to update tests as appropriate.
 ### Email: 
 [naveen@syrusdark.website](mailto:naveen@syrusdark.website)
 ### Website: 
-[Syrusdark Blog](https://blog.syrusdark.webiste)
+[Syrusdark Blog](https://blog.syrusdark.website)
