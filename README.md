@@ -34,9 +34,12 @@ Please make sure to update tests as appropriate.
 ### Git urls:
 [github.com](https://github.com/naveen521kk/dog-ceo-py)
 
+
 [gitlab.com](https://gitlab.com/naveen521kk/dog-ceo)
 
 ### Email: 
 [naveen@syrusdark.website](mailto:naveen@syrusdark.website)
+
+
 ### Website: 
 [Syrusdark Blog](https://blog.syrusdark.website)
