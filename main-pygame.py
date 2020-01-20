@@ -220,8 +220,8 @@ pygame.init()
 displayinfo = pygame.display.Info()
 #pygame.display.set_mode((displayinfo.current_w, displayinfo.current_h))
 
-pygame.display.set_caption("Dog ceo")
-font = pygame.font.Font("Fonts/HOMOARAK.ttf", 50)
+pygame.display.set_caption("Dog ceo-Pygame By Naveen M K")
+font = pygame.font.Font("Fonts/octin.ttf", 50)
 
 
 #The code underneath is related to anything that has to do to the game's size.
@@ -260,7 +260,8 @@ def StartScreen(): #Defines the Code for the Start Screen
     gameDisplay.blit(waiting,(0,0))
     pygame.display.update()
     shrink_imgto_fit('Images/dog.jpg')
-    StartImage = pygame.image.load('Images/dog.jpg').convert() #Sets "StartImage" To the specified image
+    #StartImage = pygame.image.load('Images/dog.jpg').convert() #Sets "StartImage" To the specified image
+    StartImage = pygame.image.load('Images/dog.jpg') #.convert() doesn't allow to set icon So reoved.
     pygame.display.set_icon(StartImage)
     gameDisplay.blit(StartImage, (50,50))
     pygame.display.update()
@@ -301,7 +302,7 @@ def openimg(stored_img):
     Dogimg = pygame.image.load(stored_img).convert()
     #gameDisplay.blit(Dogimg, (int(display_width_height[0]/4),int(display_width_height[1]/4)))
     gameDisplay.blit(Dogimg, (10,int(display_width_height[1]/8)))
-    pygame.display.set_icon(Dogimg)
+    #pygame.display.set_icon(Dogimg)
     pygame.mouse.set_visible(True)
     pygame.display.toggle_fullscreen()
     pygame.display.update()
@@ -345,7 +346,7 @@ def shrink_imgto_fit(store_path):
             img.save(store_path) 
         elif img.size[1] > display_width_height[1]:
             basewidth = img.size[0]
-            hsize = display_width_height[1] - int(display_width_height[1]/8) - 10
+            hsize = display_width_height[1] - int(display_width_height[1]/8) - 60
             img = img.resize((basewidth,hsize), Image.LANCZOS)
             img.save(store_path)
         else:
@@ -354,7 +355,7 @@ StartScreen() #Calls StartScreen
 while True:            
     for event in pygame.event.get(): #If a key is pressed or the mouse is moved.
         if event.type == pygame.QUIT: #If the event is the quit button being clicked
-            loading("Bye Bye! By Naveen M K")
+            loading("Bye Bye! \n By Naveen M K")
             time.sleep(5)
             pygame.quit() 
             quit()
@@ -386,7 +387,7 @@ while True:
                 if fullscreen==False:
                     pygame.display.set_mode(flags=pygame.FULLSCREEN)
                     pygame.display.update()
-                    loading("Full Screen\n Loading New Image")
+                    loading("Full Screen Loading New Image")
                     DogRequest()
                     fullscreen=True
                 else:
