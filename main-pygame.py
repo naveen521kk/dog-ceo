@@ -3,7 +3,7 @@
 Created on Tue Oct 22 18:37:13 2019
 Gui for Dog ceo
 
-@author: Naveen User
+@author: Naveen 
 """
 """                                 Apache License
                            Version 2.0, January 2004
@@ -211,6 +211,9 @@ import pygame
 import time
 import os
 from sys import exit as quit
+#Intialising Logger
+import logging
+logging.basicConfig(filename="log.log", level=logging.INFO)
 
 pygame.init()
 
@@ -218,23 +221,24 @@ displayinfo = pygame.display.Info()
 #pygame.display.set_mode((displayinfo.current_w, displayinfo.current_h))
 
 pygame.display.set_caption("Dog ceo")
-font = pygame.font.Font("Images/Magnolia.ttf", 50)
+font = pygame.font.Font("Fonts/HOMOARAK.ttf", 50)
 
 
 #The code underneath is related to anything that has to do to the game's size.
-display_width_height=[800,600]
-block_size = 10 #Sets the value for the size of a single block in the SNEK Game.
-gameDisplay =  pygame.display.set_mode(flags=pygame.RESIZABLE) #This sets the game window size
+#display_width_height=[800,600]
+#screen=pygame.display.set_mode([screen_width,screen_height])
+gameDisplay =  pygame.display.set_mode(flags=pygame.FULLSCREEN) #Noframe window
+x, y = gameDisplay.get_size()
+display_width_height=[x,y]
+gameDisplay =  pygame.display.set_mode(display_width_height,flags=pygame.RESIZABLE)
 pygame.display.update() # Updates the Display to the newest frame. pygame.display.flip also does the same thing as this, but has less versatility.
-
+fullscreen= False
 #The code below initializes and plays audio!!
 pygame.mixer.init() #Initializes the Mixer/Player.
-pygame.mixer.music.load("Sounds/banditb3.mp3") #Loads the audio file
+pygame.mixer.music.load("Sounds/dog_bark.mp3") #Loads the audio file
 pygame.mixer.music.play(-1) #Plays the audio file and loops it forever.
 
 #Internal Variables that will change whether the game runs:
-gameQuit = False #Sets the variable that will check if the user wants to exit the game to false.
-gameExit = False #This will check if the user wants to stop the game, but not quit it. It is set to true.
 url="https://dog.ceo/api/breeds/image/random"
 path=os.path.abspath(os.curdir)+'\\Images\\\\dog\\'
 
@@ -250,11 +254,12 @@ poisonblue = (25, 25, 77)
 
 def StartScreen(): #Defines the Code for the Start Screen
     pygame.mouse.set_visible(False)
-    waiting=font.render("Please wait Loading...",1,white)
-    gameDisplay.fill(black)
+    waiting=font.render("Please wait Loading...",1,black)
+    gameDisplay.fill(white)
     pygame.display.update()
     gameDisplay.blit(waiting,(0,0))
     pygame.display.update()
+    shrink_imgto_fit('Images/dog.jpg')
     StartImage = pygame.image.load('Images/dog.jpg').convert() #Sets "StartImage" To the specified image
     pygame.display.set_icon(StartImage)
     gameDisplay.blit(StartImage, (50,50))
@@ -282,23 +287,25 @@ def DogRequest():
         filename=filename+str(no_random+1)
     open(path+filename+'.'+img.format,"wb").write(img1.content)
     stored_img=path+filename+'.'+img.format.lower()
+    shrink_imgto_fit(stored_img)
     openimg(stored_img)
 def openimg(stored_img):
     global url
     global path
     global display_width_height
-    filesave=font.render("Status: "+str(stored_img),1,white)
-    gameDisplay.fill(black)
+    filesave=font.render("Status: "+str(stored_img),1,black)
+    gameDisplay.fill(white)
     pygame.display.update()
     gameDisplay.blit(filesave,(0,0))
     pygame.display.update()
     Dogimg = pygame.image.load(stored_img).convert()
-    gameDisplay.blit(Dogimg, (int(display_width_height[0]/4),int(display_width_height[1]/4)))
+    #gameDisplay.blit(Dogimg, (int(display_width_height[0]/4),int(display_width_height[1]/4)))
+    gameDisplay.blit(Dogimg, (10,int(display_width_height[1]/8)))
     pygame.display.set_icon(Dogimg)
     pygame.mouse.set_visible(True)
     pygame.display.toggle_fullscreen()
     pygame.display.update()
-    user_help=font.render("Press R to Reload and Esc to quit",1,white)
+    user_help=font.render("Press R to Reload and Esc to quit",1,black)
     gameDisplay.blit(user_help,(0,40))
     pygame.display.update()
     endscreen()
@@ -320,16 +327,73 @@ def endscreen():
                 gameDisplay.blit(waiting,(0,0))
                 pygame.display.update()
                 DogRequest() 
-
+def loading(msg):
+    gameDisplay.fill(white)
+    waiting=font.render(msg,1,black)
+    pygame.display.update()
+    gameDisplay.blit(waiting,(0,0))
+    pygame.display.update()
+def shrink_imgto_fit(store_path):
+    global display_width_height
+    from PIL import Image
+    img = Image.open(store_path)
+    while True:
+        if img.size[0] > display_width_height[0]:
+            basewidth = display_width_height[0]-30
+            hsize = img.size[1]
+            img = img.resize((basewidth,hsize), Image.LANCZOS)
+            img.save(store_path) 
+        elif img.size[1] > display_width_height[1]:
+            basewidth = img.size[0]
+            hsize = display_width_height[1] - int(display_width_height[1]/8) - 10
+            img = img.resize((basewidth,hsize), Image.LANCZOS)
+            img.save(store_path)
+        else:
+            break
 StartScreen() #Calls StartScreen
 while True:            
     for event in pygame.event.get(): #If a key is pressed or the mouse is moved.
         if event.type == pygame.QUIT: #If the event is the quit button being clicked
-            pygame.quit() #for some reason, I was unable to set gameQuit to true and quit the game that way, so I'm doing it like this.
+            loading("Bye Bye! By Naveen M K")
+            time.sleep(5)
+            pygame.quit() 
             quit()
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_r:
+                loading("Please wait Loading...")
                 DogRequest()
-            if event.key == pygame.K_ESCAPE:
+            elif event.key == pygame.K_ESCAPE or event.key == pygame.K_q:
+                loading("Bye Bye! By Naveen M K")
+                time.sleep(5)
                 pygame.quit()
                 quit()
+            elif event.key == pygame.K_f:
+                #logging.info('pygame.display.toggle_fullscreen()='+str(pygame.display.toggle_fullscreen()))
+                if fullscreen==False:
+                    pygame.display.set_mode(flags=pygame.FULLSCREEN)
+                    #logging.info('pygame.display.toggle_fullscreen()='+str(pygame.display.toggle_fullscreen()))
+                    #logging.info('Full Screen:'+str(fullscreen))
+                    pygame.display.update()
+                    loading("Full Screen")
+                    DogRequest()
+                    fullscreen=True
+                else:
+                    pygame.display.set_mode(flags=pygame.RESIZABLE)
+                    pygame.display.update()
+                    DogRequest()
+                    fullscreen=False
+            elif event.key  == pygame.K_F5:
+                if fullscreen==False:
+                    pygame.display.set_mode(flags=pygame.FULLSCREEN)
+                    pygame.display.update()
+                    loading("Full Screen\n Loading New Image")
+                    DogRequest()
+                    fullscreen=True
+                else:
+                    pygame.display.set_mode(flags=pygame.RESIZABLE)
+                    pygame.display.update()
+                    DogRequest()
+                    fullscreen=False
+            else:
+                    loading("Please wait Loading...")
+                    DogRequest()
