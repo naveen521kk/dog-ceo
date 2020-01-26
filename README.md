@@ -1,6 +1,6 @@
 # Dog-Ceo-py
 
-[![License: MIT](https://img.shields.io/github/license/naveen521kk/dog-ceo-py)]
+![License: MIT](https://img.shields.io/github/license/naveen521kk/dog-ceo-py)
 
 This is a python app made with pygame and is a example of dog.ceo a simple image of dogs. [dog.ceo](https://dog.ceo)
 
