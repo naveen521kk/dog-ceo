@@ -1,7 +1,5 @@
 # Dog-Ceo-py
 
-[![License: MIT](https://img.shields.io/github/license/naveen521kk/dog-ceo-py)](https://opensource.org/licenses/Apache-2.0)
-
 This is a python app made with pygame and is a example of dog.ceo a simple image of dogs. [dog.ceo](https://dog.ceo)
 
 ## Installation
