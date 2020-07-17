@@ -41,8 +41,8 @@ jobs:
           pyinstaller main-pygame.py
           7z a build${{ matrix.os }}.zip dist\
           
-      - name: Build Application (Windows)
-        if: runner.os == 'Windows'
+      - name: Build Application (Non-Windows)
+        if: runner.os != 'Windows'
         run: |
           pip install -r requirements.txt
           pip install pyinstaller
