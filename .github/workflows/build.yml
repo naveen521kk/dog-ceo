@@ -9,6 +9,7 @@ on:
     branches: 
       - master
       - release/*
+      - build-2
     tags:
       - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
@@ -30,10 +31,18 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
      
-      - name: Build Application
+      - name: Build Application Windows
+        if: ${{ matrix.os }} == 'windows'
         run: |
           python -m venv mainbuild
           mainbuild\Scripts\activate
+          pip install -r requirements.txt
+          pip install pyinstaller
+          pyinstaller --onefile main-pygame.py
+          7z a build${{ matrix.os }}.zip dist\ 
+      - name: Build Application Non Windows
+        if: ${{ matrix.os }} != 'windows'
+        run: |
           pip install -r requirements.txt
           pip install pyinstaller
           pyinstaller --onefile main-pygame.py
