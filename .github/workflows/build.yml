@@ -43,10 +43,11 @@ jobs:
       - name: Build Application Non Windows
         if: runner.os != 'Windows'
         run: |
+          mkdir dist
           pip install -r requirements.txt
           pip install pyinstaller
           pyinstaller --onefile main-pygame.py
-          7z a build${{ matrix.os }}.zip dist\ 
+          7z a build${{ matrix.os }}.zip dist
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
