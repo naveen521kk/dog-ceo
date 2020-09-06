@@ -32,17 +32,28 @@ jobs:
           mainbuild\Scripts\activate
           pip install -r requirements.txt
           pip install pyinstaller
-          pyinstaller --onefile main-pygame.py
+          pyinstaller --onedir --noconfirm --nowindow`
+           --add-data="Fonts\*;Fonts" `
+           --add-data="Images\*;Images" `
+           --add-data="Sounds\*;Sounds" `
+           --add-data="help.doghelp;help.doghelp"
+          main-pygame.py
       - name: Build Application Non Windows
         if: runner.os != 'Windows'
         run: |
           mkdir dist
           pip install -r requirements.txt
           pip install pyinstaller
-          pyinstaller --onefile main-pygame.py
+          pyinstaller --onedir ^
+          --noconfirm --nowindow ^
+          --add-data="Fonts\*:Fonts" ^
+          --add-data="Images\*:Images" ^ 
+          --add-data="Sounds\*:Sounds" ^
+          --add-data="help.doghelp:help.doghelp" ^
+          main-pygame.py
       - uses: actions/upload-artifact@v2
         with:
-          name: my-artifact
+          name: ${{ runner.os }}
           path: dist/*
 
           
